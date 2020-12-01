@@ -59,7 +59,7 @@ class Data_Handler(object):
         ----------
         A dataframe containg data for just the desired varieties.
         '''
-        
+
         return self.full[self.full['variety'].isin(varieties)]
 
 if __name__ == '__main__':

@@ -1,12 +1,14 @@
 import numpy as np
 import pandas as pd
 from collections import Counter
+from nltk.corpus import stopwords
 
 class Data_Handler(object):
 
     def __init__(self, filepath):
         self.full = pd.read_csv(filepath)[['description', 'variety']].dropna()
         self.freq_dict = self.create_freq_dict()
+        self.stop_words = self.generate_stop_words()
     
     def create_freq_dict(self):
         '''
@@ -61,6 +63,26 @@ class Data_Handler(object):
         '''
 
         return self.full[self.full['variety'].isin(varieties)]
+
+    def generate_stop_words(self):
+        '''
+        Generates a list of stop words for vectorization of data.
+        Pulls words from the NLTK english stopword list and adds in
+        all the varietals to avoid data leakage.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        ----------
+        A stopword list as described above.
+        '''
+        eng_stops = set(stopwords.words('english'))
+        varieties = list(self.full['variety'].unique())
+        varieties = set(' '.join(varieties).replace('-','').split())
+        varieties.remove('apple')
+        return list(eng_stops.union(varieties).union('chard'))
 
 if __name__ == '__main__':
     '''

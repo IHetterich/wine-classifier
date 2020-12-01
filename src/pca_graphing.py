@@ -69,18 +69,18 @@ def plot_mnist_embedding(ax, X, y, title=None):
     varieties = y.unique()
     for i, var in enumerate(varieties):
       temp = X[y == var]
-      x = temp.iloc[:, [0]]
-      y = temp.iloc[:, [1]]
-      ax.scatter(x, y, color=colors[i], label=var)
+      x_temp = temp.iloc[:, [0]]
+      y_temp = temp.iloc[:, [1]]
+      ax.scatter(x_temp, y_temp, color=colors[i], label=var)
 
 if __name__ == '__main__':
   wrangler = Data_Handler('data/cleaned_data.csv')
   test = wrangler.get_top_num(2)
   X_test = test['description']
   y_test = test['variety']
-  vecto = CountVectorizer(stop_words='english')
+  vecto = CountVectorizer(stop_words='english', max_features=10)
   X_vect = vecto.fit_transform(X_test)
-  smol = TruncatedSVD(n_components=10)
+  smol = TruncatedSVD(n_components=5)
   smol_test = smol.fit_transform(X_vect)
   fig, ax = plt.subplots()
   scree_plot(ax, smol)

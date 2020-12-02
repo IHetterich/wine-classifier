@@ -82,7 +82,7 @@ class Data_Handler(object):
         varieties = list(self.full['variety'].unique())
         varieties = set(' '.join(varieties).lower().replace('-',' ').split())
         customs = set(['chard', 'affile', 'alexandrie', 'aunis', 'avola', 'oeil', 'rondinella', 'st',
-                        'wine', 'flavors', 'fruit'])
+                        'wine', 'flavors', 'fruit', 'flavor', 'finish', 'drink', 'palate'])
         return list(eng_stops.union(varieties).union(customs))
 
 if __name__ == '__main__':

@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from wordcloud import WordCloud, ImageColorGenerator
 plt.style.use('ggplot')
 
 def top_x_words(vectorizer, model, num):
@@ -30,4 +31,11 @@ def graph_top_num(data_handler, num):
     ax.set_title(f'Top {num} Reviewed Varieties', fontsize=25)
     plt.xticks(rotation=65, fontsize=15)
     plt.tight_layout()
+    plt.show()
+
+def word_cloud(string, stops):
+    wordcloud = WordCloud(stopwords=stops, background_color='white', width=800, height=500).generate(string)
+    plt.figure(figsize=(6,6))
+    plt.imshow(wordcloud, interpolation='bilinear')
+    plt.axis('off')
     plt.show()

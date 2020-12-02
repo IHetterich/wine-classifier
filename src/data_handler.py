@@ -81,8 +81,8 @@ class Data_Handler(object):
         eng_stops = set(stopwords.words('english'))
         varieties = list(self.full['variety'].unique())
         varieties = set(' '.join(varieties).lower().replace('-',' ').split())
-        # varieties.remove('apple')
-        customs = set(['chard', 'affile', 'alexandrie', 'aunis', 'avola', 'oeil', 'rondinella', 'st'])
+        customs = set(['chard', 'affile', 'alexandrie', 'aunis', 'avola', 'oeil', 'rondinella', 'st',
+                        'wine', 'flavors', 'fruit'])
         return list(eng_stops.union(varieties).union(customs))
 
 if __name__ == '__main__':

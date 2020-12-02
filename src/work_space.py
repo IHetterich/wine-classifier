@@ -35,4 +35,5 @@ if __name__ == '__main__':
     # print(bayes.score(X_test, y_test))
 
     wrangler = Data_Handler('data/cleaned_data.csv')
-    graph_top_num(wrangler, 15)
+    df = wrangler.full
+    print(len(df['variety'].unique()))

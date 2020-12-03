@@ -91,4 +91,4 @@ if __name__ == '__main__':
     will be primarily in other .py files and pipelines.
     '''
 
-    wrangler = Data_Handler('data/cleaned_data.csv')
+    pass

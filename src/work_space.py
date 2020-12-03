@@ -64,7 +64,16 @@ def vectorizer_hyper_test(params, stops, X, y):
             model_testing(stops=stops, X=X, y=y, max=feats, ngrams=grams)
 
 if __name__ == '__main__':
-    params = {'max_features': [10000, 15000, 20000, 25000, 30000, None], 'n-grams': [(1,1)]}
+    '''
+    Due to the nature of the functions here I haven't instantiated argparse.
+    Honestly opening this file up and directly changing the parameter dictionary
+    seems more straightforward and easier than having to pass in 10 values
+    on the command line, especially when juggling multiple hyper parameters.
+
+    Keeping whatever was found best in the last grid search as the only values.
+    '''
+
+    params = {'max_features': [None], 'n-grams': [(1,1)]}
     
     wrangler = Data_Handler('data/cleaned_data.csv')
     stops = wrangler.stop_words

@@ -11,7 +11,7 @@ In recent years, since moving a few blocks from a great wine store, I've become 
 The data was found on [kaggle](https://www.kaggle.com/zynicide/wine-reviews) and was originally sourced from [Wine Enthusiast](https://www.winemag.com/) via webscraping. The data is presented in 2 .csv files that on their face seem to contain 280 thousand reviews. However, due to the nature of the scraping algorithm used there are numerous duplicates within and between the two which, after elimination leave ~170 thousand unique reviews. For the time being most of the features in the data were dropped due to irrelevance to the immediate question.
 
 | country | description | designation | points | price | province | region_1 | region_2 | taster_name |variety | winery |
-|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | Italy | Aromas include tropical fruit, broom, brimstone and dried... | Vulkà Bianco | 87 | nan | Sicily & Sardinia | Etna | nan | Kerin O’Keefe | White Blend | Nicosia |
 | Portugal | This is ripe and fruity, a wine that is smooth while still... | Avidagos | 87 | 15 | Douro | nan | nan | Roger Voss | Portuguese Red | Quinta dos Avidagos |
 | US | Tart and snappy, the flavors of lime flesh and rind... | nan | 87 | 14 | Oregon | Willamette Valley | Willamette Valley | Paul Gregutt | Pinot Gris | Rainstorm |
@@ -40,8 +40,10 @@ Moving forward I spent a good deal of time dealing with stop words to remove fro
 
 ![Initial wordcloud](images/first_cloud.png)
 
-
+Based on the prevelance of such non-descriptive words as 'wine', 'drink', and 'finish' those and similar words were added to our stop words. As a final note on featurization we should address stemming and lemmatization. As things currently stand default procedures are being run by our vectorizer, in this case tf-idf. Once again the distinguishing terms in our reviews are the descriptions of flavors and scents as such the subtleties of different stemming and lemmatization are somewhat lost on these nouns and adjectives. That is not to say futher investigation will not be attempted in coming development.
 
 ## Model Creation
+
+Throughout the process of featurization there was a good deal of iteration. To that end I relied of Naive Bayes for it's relatively quick fitting and testing times. Of the models I chose a Complement model to address the unbalanced nature of my top 15 varieties, while they may be the largest they still vary greatly in size.
 
 ## Next Steps 

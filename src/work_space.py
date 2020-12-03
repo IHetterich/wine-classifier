@@ -35,7 +35,7 @@ if __name__ == '__main__':
     stops = wrangler.stop_words
     tfidf = TfidfVectorizer(stop_words=stops)
 
-    df = wrangler.get_top_num(10)
+    df = wrangler.get_certain_varieties(['Chardonnay', 'Sauvignon Blanc'])
     y = df['variety']
     X = df['description']
     tfidf = TfidfVectorizer(stop_words=stops)

@@ -50,11 +50,11 @@ Primary efforts thus far have been focused on understanding the challenges any m
 
 | Number of Wines | Accuracy of Model |
 |:---:|:---:|
-| 2 | |
-| 3 | |
-| 5 | |
-| 10 | |
-| 15 | |
+| 2 | 96% |
+| 3 | 88% |
+| 5 | 75% |
+| 10 | 63% |
+| 15 | 57% |
 
 While a dropoff of accuracy when expending possible categories in classification isn't necessarily something to be alarmed about I was interested to find out why exactly. Pulling up the most heavily weighted words for our 15 wines made the picture pretty clear.
 
@@ -70,7 +70,9 @@ Looking at these the issue seems like it could lie more in the overlap of variet
 
 | Wine 1 | Accuracy | Wine 2|
 |:---:|:---:|:---:|
-
+| Pinot Noir | 96% | Chardonnay |
+| Pinot Noir | 83% | Merlot |
+| Sauvignon Blanc | 84% | Chardonnay |
 As you can see similar styles consistently perform worse regardless of sample size. While this is far from an earth shattering conclusion I did find this clear division satisfying.
 
 ## Next Steps 

@@ -48,6 +48,7 @@ Throughout the process of featurization there was a good deal of iteration. To t
 
 Primary efforts thus far have been focused on understanding the challenges any model will face in trying to categorize these varieties. Initial testing for proof of code and concept was done with just the two most reviewed varieties, Pinot Noir and Chardonnay. Results were incredible with ~98% accuracy on both training and test data. However, with addition of further wines this accuracy dropped dramatically. Before delving into the reasons behind this I just want to mention that accuracy is being used to compare models sine there is no difference in consequences between false positives and false negatives.
 
+<center>
 | Number of Wines | Accuracy of Model |
 |:---:|:---:|
 | 2 | 97% |
@@ -55,6 +56,7 @@ Primary efforts thus far have been focused on understanding the challenges any m
 | 5 | 75% |
 | 10 | 63% |
 | 15 | 58% |
+</center>
 
 While a dropoff of accuracy when expending possible categories in classification isn't necessarily something to be alarmed about I was interested to find out why exactly. Pulling up the most heavily weighted words for our 15 wines made the picture pretty clear.
 

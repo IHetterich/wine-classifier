@@ -73,6 +73,7 @@ Looking at these the issue seems like it could lie more in the overlap of variet
 | Pinot Noir | 96% | Chardonnay |
 | Pinot Noir | 83% | Merlot |
 | Sauvignon Blanc | 84% | Chardonnay |
+
 As you can see similar styles consistently perform worse regardless of sample size. While this is far from an earth shattering conclusion I did find this clear division satisfying.
 
 ## Next Steps 

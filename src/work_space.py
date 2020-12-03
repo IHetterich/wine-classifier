@@ -10,15 +10,15 @@ from nltk.corpus import stopwords
 
 if __name__ == '__main__':
     #TOP WORDS PER VARIETAL
-    wrangler = Data_Handler('data/cleaned_data.csv')
-    pn = wrangler.get_top_num(15)
-    stops = wrangler.stop_words
-    vecto = TfidfVectorizer(max_features=100, stop_words=stops)
-    vecto.fit(pn['description'])
-    X = vecto.transform(pn['description'])
-    model = MultinomialNB()
-    model.fit(X, pn['variety'])
-    top_x_words(vecto,model, 10)
+    # wrangler = Data_Handler('data/cleaned_data.csv')
+    # pn = wrangler.get_top_num(15)
+    # stops = wrangler.stop_words
+    # vecto = TfidfVectorizer(max_features=100, stop_words=stops)
+    # vecto.fit(pn['description'])
+    # X = vecto.transform(pn['description'])
+    # model = MultinomialNB()
+    # model.fit(X, pn['variety'])
+    # top_x_words(vecto,model, 10)
 
     #MODEL TESTING
     # wrangler = Data_Handler('data/cleaned_data.csv')
@@ -43,3 +43,5 @@ if __name__ == '__main__':
     # text = ' '.join(review for review in df['description'])
     # stops = wrangler.stop_words
     # word_cloud(text, stops)
+
+    pass

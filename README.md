@@ -4,11 +4,11 @@
 
 ## Motivation and Goals
 
-In recent years, since moving a few blocks from a great wine store, I've become more and more interested in wine. I've always enjoyed trying new things and since I've been going to tastings I've been blown away by just how much different types of wine can vary. That said tasting notes have always seemed incredibly subjective to me, and I've always wondered how accurate you can really be in predicting a wine in a blind taste test. To that end I set out on this project to see how accurately a machine learning model could predict a varietal by tasting notes alone. Furthermore if a model can be successful I think it opens up the door to a recommender that could help me at the very least find new wine to try.
+In recent years, since moving a few blocks from a great wine store, I've become more and more interested in wine. I've always enjoyed trying new things and since I've been going to tastings I've been blown away by just how much different types of wine can vary. That said, tasting notes have always seemed incredibly subjective to me, and I've always wondered how accurate you can really be in predicting a wine in a blind taste test. To that end I set out on this project to see how accurately a machine learning model could predict a varietal by tasting notes alone. Furthermore if a model can be successful I think it opens up the door to a recommender that could help me at the very least find new wines to try.
 
 ## The Data
 
-The data was found on [kaggle](https://www.kaggle.com/zynicide/wine-reviews) and was originally sourced from [Wine Enthusiast](https://www.winemag.com/) via webscraping. The data is presented in 2 .csv files that on their face seem to contain 280 thousand reviews. However, due to the nature of the scraping algorithm used there are numerous duplicates within and between the two which, after elimination leave ~170 thousand unique reviews. For the time being most of the features in the data were dropped due to irrelevance to the immediate question.
+The data was found on [kaggle](https://www.kaggle.com/zynicide/wine-reviews) and was originally sourced from [Wine Enthusiast](https://www.winemag.com/) via webscraping. The data is presented in 2 .csv files that on their face seem to contain 280 thousand reviews. However, due to the nature of the scraping algorithm used there are numerous duplicates within and between the two which, after elimination, leave ~170 thousand unique reviews. For the time being most of the features in the data were dropped due to irrelevance to the immediate question.
 
 | country | description | designation | points | price | province | region_1 | region_2 | taster_name |variety | winery |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
@@ -22,7 +22,7 @@ Initial EDA and research focused on the spread of varieties. Exploration of the 
 
 ![Top 10 reviewed wines](images/top_varieties.png)
 
-After some debating I settled on a sub-sample of the top 15 most reviewed wines to move forward with for text featurization and model creation. The choice was based on a few factors but chief among them the top 15 included all varieties with more than 3,000 reviews and accounted for 65% or ~110 thousand datapoints from our original dataset. Furthermore the wines represented in the top 15 walk a line between diversity and similarity, issues addressed within just this sub-sample should hopefully be extendable to further varieties. Future investigation will require more data on these less represented wines. Below are the 15 wines used and their respective review counts.
+After some debating I settled on a sub-sample of the top 15 most reviewed wine varieties to move forward with for text featurization and model creation. The choice was based on a few factors but chief among them the top 15 included all varieties with more than 3,000 reviews and accounted for 65% or ~110 thousand datapoints from our original dataset. Furthermore the wines represented in the top 15 walk a line between diversity and similarity, issues addressed within just this sub-sample should hopefully be extendable to further varieties. Future investigation will require more data on these less represented wines. Below are the 15 wines used and their respective review counts.
 
 | Wine | Reviews | Wine | Reviews | Wine | Reviews |
 |:---:|:---:|:---:|:---:|:---:|:---:|
@@ -46,7 +46,7 @@ Based on the prevelance of such non-descriptive words as 'wine', 'drink', and 'f
 
 Throughout the process of featurization there was a good deal of iteration. To that end I relied of Naive Bayes for it's relatively quick fitting and testing times. Of the models I chose a Complement model to address the unbalanced nature of my top 15 varieties, while they may be the largest they still vary greatly in size. Out of the box it performed relatively well, in fact in comparative tests it did as well if not better than Random Forests. Future development will be focused on model fine-tuning and improvement as well as implementation of neural networks in an attempt to create the most accurate model possible.
 
-Primary efforts thus far have been focused on understanding the challenges any model will face in trying to categorize these varieties. Initial testing for proof of code and concept was done with just the two most reviewed varieties, Pinot Noir and Chardonnay. Results were incredible with ~98% accuracy on both training and test data. However, with addition of further wines this accuracy dropped dramatically. Before delving into the reasons behind this I just want to mention that accuracy is being used to compare models sine there is no difference in consequences between false positives and false negatives.
+Primary efforts thus far have been focused on understanding the challenges any model will face in trying to categorize these varieties. Initial testing for proof of code and concept was done with just the two most reviewed varieties, Pinot Noir and Chardonnay. Results were incredible out the box with ~98% accuracy on both training and test data. However, with addition of further wines this accuracy dropped dramatically. Before delving into the reasons behind this I just want to mention that accuracy is being used to compare models since there is no difference in consequences between false positives and false negatives.
 
 | Number of Wines | Accuracy of Model |
 |:---:|:---:|
@@ -56,7 +56,7 @@ Primary efforts thus far have been focused on understanding the challenges any m
 | 10 | 63% |
 | 15 | 58% |
 
-While a dropoff of accuracy when expending possible categories in classification isn't necessarily something to be alarmed about I was interested to find out why exactly. Pulling up the most heavily weighted words for our 15 wines made the picture pretty clear.
+While a dropoff of accuracy when expanding possible categories in classification isn't necessarily something to be alarmed about I was interested to find out why exactly. Pulling up the most heavily weighted words for our 15 wines made the picture pretty clear.
 
 | Variety | Most Relevant Words |
 |:---:|:---:|
@@ -66,7 +66,7 @@ While a dropoff of accuracy when expending possible categories in classification
 | Sauvignon Blanc | citrus, green, grapefruit, acidity, crisp, lime, aromas, lemon, fresh, clean |
 
 
-Looking at these the issue seems like it could lie more in the overlap of varieties than in the complication of the model. Since many red wines have similar flavor profiles the descriptions tend to be similar, and the same holds for white wines. To make sure this was issue and not just adding more wines or wines with various review counts I ran some tests the results of which are below.
+Looking at these the issue seems like it could lie more in the overlap of varieties than in the complication of the model. Since many red wines have similar flavor profiles the descriptions tend to be similar, and the same holds for white wines. To further test this theory I ran a few more model tests pitting similar and dissimilar wines against eachother.
 
 | Wine 1 | Accuracy | Wine 2|
 |:---:|:---:|:---:|
@@ -78,7 +78,7 @@ As you can see similar styles consistently perform worse regardless of sample si
 
 ## Next Steps 
 
-Some next steps hae already been mentioned throughout this README but lets pull them all together and give a clear direction to the project. While we now have featurized data, a servicable model, and a better understanding of the unique challenges of this dataset there's a lot more I'd like to explore. In the interest of getting both more accurate predictions and recommender functionality I want to move forward with further model tuning and experimentation. Of particular interest to me is the use of neural networks. If all goes well with that, and even if it doesn't, I'm planning on moving ahead with developing a flask application housing this model for ease of use and sharing should someone else be interested in this model's applications like I am. Outside of these two main goals there are obviously hundreds of other small tweaks and improvements to made namely in the featurizing of the data and potentially the web scraping of further reviews.
+Some next steps have already been mentioned throughout this README but lets pull them all together and give a clear direction to the project. While we now have featurized data, a servicable model, and a better understanding of the unique challenges of this dataset there's a lot more I'd like to explore. In the interest of getting both more accurate predictions and recommender functionality I want to move forward with further model tuning and experimentation. Of particular interest to me is the use of neural networks. If all goes well with that, and even if it doesn't, I'm planning on moving ahead with developing a flask application housing this model for ease of use and sharing should someone else be interested in its applications. Outside of these two main goals there are obviously hundreds of other small tweaks and improvements to made namely in the featurizing of the data and potentially the web scraping of further reviews.
 
 ## Acknowledgements
 

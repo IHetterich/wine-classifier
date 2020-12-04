@@ -8,6 +8,7 @@ from sklearn.naive_bayes import ComplementNB
 from sklearn.feature_extraction.text import TfidfVectorizer
 plt.style.use('ggplot')
 
+
 def top_x_words(num):
     wrangler = Data_Handler('data/cleaned_data.csv')
     pn = wrangler.get_top_num(15)
@@ -27,6 +28,7 @@ def top_x_words(num):
         features_topn = [feature_words[i] for i in i_topn]
         print(f"Top {num} tokens: ", features_topn)
 
+
 def graph_top_num(num):
     data_handler = Data_Handler('data/cleaned_data.csv')
     varietals = list(data_handler.freq_dict.keys())
@@ -37,7 +39,7 @@ def graph_top_num(num):
     top_varietals = [varietals[idx] for idx in top_idx]
     top_counts = [counts[idx] for idx in top_idx]
 
-    fig, ax = plt.subplots(figsize=(15,15), dpi=100)
+    fig, ax = plt.subplots(figsize=(15, 15), dpi=100)
     x = list(range(num))
     ax.bar(x, top_counts, tick_label=top_varietals)
     ax.set_xlabel('Varieties', fontsize=20)
@@ -47,6 +49,7 @@ def graph_top_num(num):
     plt.tight_layout()
     plt.show()
 
+
 def word_cloud():
     wrangler = Data_Handler('data/cleaned_data.csv')
     df = wrangler.full
@@ -54,15 +57,17 @@ def word_cloud():
     stops = wrangler.stop_words
     wordcloud = WordCloud(stopwords=stops, background_color='white', 
         width=800, height=500).generate(text)
-    plt.figure(figsize=(6,6))
+    plt.figure(figsize=(6, 6))
     plt.imshow(wordcloud, interpolation='bilinear')
     plt.axis('off')
     plt.show()
 
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Houses several EDA methods")
     parser.add_argument('-v', '--visual', help='cloud, top_words, top_var')
-    parser.add_argument('-n', '--number', type=int, help='Number of variables if applicable')
+    parser.add_argument('-n', '--number', type=int, help='Number of variables \
+        if applicable')
     args = parser.parse_args()
     visual, num = args.visual, args.number
     if visual == 'cloud':

@@ -12,7 +12,7 @@ class Data_Handler(object):
     
     def create_freq_dict(self):
         '''
-        Creates a Counte dictionary of the varietals in the full dataset.
+        Creates a Counter dictionary of the varietals in the full dataset.
 
         Parameters
         ----------

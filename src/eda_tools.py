@@ -2,10 +2,14 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import argparse
+
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics import plot_confusion_matrix
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import ComplementNB
 from data_handler import Data_Handler
 from wordcloud import WordCloud, ImageColorGenerator
-from sklearn.naive_bayes import ComplementNB
-from sklearn.feature_extraction.text import TfidfVectorizer
+
 plt.style.use('ggplot')
 
 
@@ -63,6 +67,25 @@ def word_cloud():
     plt.show()
 
 
+def confusion_matrix():
+    wrangler = Data_Handler('data/cleaned_data.csv')
+    df = wrangler.get_top_num(15)
+    stops = wrangler.stop_words
+
+    X = df['description']
+    y = df['variety']
+    X_train, X_test, y_train, y_test = train_test_split(X, y)
+
+    vecto = TfidfVectorizer(stop_words=stops)
+    X_train = vecto.fit_transform(X_train)
+    X_test = vecto.transform(X_test)
+    model = ComplementNB()
+    model.fit(X_train, y_train)
+    plot_confusion_matrix(model, X_test, y_test, normalize='true', 
+        xticks_rotation='vertical')
+    plt.show()
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Houses several EDA methods")
     parser.add_argument('-v', '--visual', help='cloud, top_words, top_var')
@@ -76,5 +99,7 @@ if __name__ == '__main__':
         top_x_words(num)
     elif visual == 'top_var':
         graph_top_num(num)
+    elif visual == 'conf_mat':
+        confusion_matrix()
     else:
         print("Invalid visualization selection.")

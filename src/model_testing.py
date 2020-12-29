@@ -17,8 +17,6 @@ def model_testing(stops, X, y, max=None, ngrams=(1,1)):
     ----------
     stops - Set of stop words.
 
-    k - The number of k-folds to be used.
-
     X, y - Data and targets for use in the testing.
 
     Returns
@@ -47,7 +45,8 @@ def vectorizer_hyper_test(params, stops, X, y):
 
     Parameters
     ----------
-    params - Dictinary of hyper-parameters, keys are parameters, keys are values.
+    params - Dictinary of hyper-parameters, keys are parameters, values are 
+                lists of values to be tested.
 
     stop - Set of stop words.
 
@@ -73,12 +72,30 @@ if __name__ == '__main__':
     Keeping whatever was found best in the last grid search as the only values.
     '''
 
-    params = {'max_features': [None], 'n-grams': [(1,1)]}
+    # params = {'max_features': [None], 'n-grams': [(1,1)]}
     
+    # wrangler = Data_Handler('data/cleaned_data.csv')
+    # stops = wrangler.stop_words
+
+    # df = wrangler.get_top_num(15)
+    # y = df['variety'].to_numpy()
+    # X = df['description'].to_numpy()
+    # vectorizer_hyper_test(params, stops, X, y)
+
     wrangler = Data_Handler('data/cleaned_data.csv')
+    df = wrangler.get_top_num(15)
     stops = wrangler.stop_words
 
-    df = wrangler.get_top_num(15)
-    y = df['variety'].to_numpy()
-    X = df['description'].to_numpy()
-    vectorizer_hyper_test(params, stops, X, y)
+    X = df['description']
+    y = df['variety']
+    X_train, X_test, y_train, y_test = train_test_split(X, y)
+
+    vecto = TfidfVectorizer(stop_words=stops)
+    X_train = vecto.fit_transform(X_train)
+    X_test = vecto.transform(X_test)
+    model = ComplementNB()
+    model.fit(X_train, y_train)
+
+    probs = model.predict_proba(X_test[0])
+    idx = np.argsort(probs)
+    print(model.classes_[idx])

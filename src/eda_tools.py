@@ -56,12 +56,13 @@ def graph_top_num(num):
 
 def word_cloud():
     wrangler = Data_Handler('data/cleaned_data.csv')
-    df = wrangler.full
+    # df = wrangler.full
+    df = wrangler.get_certain_varieties(['Chardonnay'])
     text = ' '.join(review for review in df['description'])
     stops = wrangler.stop_words
     wordcloud = WordCloud(stopwords=stops, background_color='white', 
-        width=800, height=500).generate(text)
-    plt.figure(figsize=(6, 6))
+        width=500, height=600, colormap='summer').generate(text)
+    plt.figure(figsize=(6, 6), dpi=250)
     plt.imshow(wordcloud, interpolation='bilinear')
     plt.axis('off')
     plt.show()

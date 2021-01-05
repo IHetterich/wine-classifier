@@ -1,12 +1,14 @@
 import numpy as np
 import pandas as pd
+import pickle
+
 from data_handler import Data_Handler
-from sklearn.feature_extraction.text import TfidfVectorizer
 from eda_tools import top_x_words, graph_top_num, word_cloud
-from sklearn.naive_bayes import MultinomialNB, ComplementNB
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split, StratifiedKFold
-from nltk.corpus import stopwords
+from sklearn.naive_bayes import MultinomialNB, ComplementNB
+
 
 def model_testing(stops, X, y, max=None, ngrams=(1,1)):
     '''
@@ -38,6 +40,7 @@ def model_testing(stops, X, y, max=None, ngrams=(1,1)):
         scores.append(model.score(X_test, y_test))
     print(np.mean(scores), scores)
 
+
 def vectorizer_hyper_test(params, stops, X, y):
     '''
     Takes in a dictionary of hyper-parameters much like a grid search and
@@ -62,6 +65,36 @@ def vectorizer_hyper_test(params, stops, X, y):
             print(f'For {grams} and {feats}')
             model_testing(stops=stops, X=X, y=y, max=feats, ngrams=grams)
 
+    
+def pickling():
+    '''
+    Creates and pickles both the vectorizer and model for use in prediction.
+
+    Parameters
+    ----------
+    None
+
+    Returns
+    ----------
+    None
+    '''
+
+    wrangler = Data_Handler('data/cleaned_data.csv')
+    stops = wrangler.stop_words
+    df = wrangler.get_top_num(15)
+    X = df['description']
+    y = df['variety']
+
+    vecto = TfidfVectorizer(stop_words=stops)
+    X = vecto.fit_transform(df['description'])
+    f =  open('pickles/text_vec.pkl', 'wb')
+    pickle.dump(vecto, f)
+
+    model = ComplementNB()
+    model.fit(X, y)
+    m = open('pickles/model.pkl', 'wb')
+    pickle.dump(model, m)
+
 if __name__ == '__main__':
     '''
     Due to the nature of the functions here I haven't instantiated argparse.
@@ -81,21 +114,3 @@ if __name__ == '__main__':
     # y = df['variety'].to_numpy()
     # X = df['description'].to_numpy()
     # vectorizer_hyper_test(params, stops, X, y)
-
-    wrangler = Data_Handler('data/cleaned_data.csv')
-    df = wrangler.get_top_num(15)
-    stops = wrangler.stop_words
-
-    X = df['description']
-    y = df['variety']
-    X_train, X_test, y_train, y_test = train_test_split(X, y)
-
-    vecto = TfidfVectorizer(stop_words=stops)
-    X_train = vecto.fit_transform(X_train)
-    X_test = vecto.transform(X_test)
-    model = ComplementNB()
-    model.fit(X_train, y_train)
-
-    probs = model.predict_proba(X_test[0])
-    idx = np.argsort(probs)
-    print(model.classes_[idx])

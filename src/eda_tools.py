@@ -14,6 +14,11 @@ plt.style.use('ggplot')
 
 
 def top_x_words(num):
+    '''
+    Prints out the top num words most highly weighted by tf-idf for a certain
+    number of varieties. Selection of varieties can be changed on line 23.
+    '''
+
     wrangler = Data_Handler('data/cleaned_data.csv')
     pn = wrangler.get_top_num(15)
     stops = wrangler.stop_words
@@ -34,6 +39,10 @@ def top_x_words(num):
 
 
 def graph_top_num(num):
+    '''
+    Graphs the number of reviews for the top num varieties in the dataset.
+    '''
+
     data_handler = Data_Handler('data/cleaned_data.csv')
     varietals = list(data_handler.freq_dict.keys())
     counts = list(data_handler.freq_dict.values())
@@ -55,6 +64,10 @@ def graph_top_num(num):
 
 
 def word_cloud():
+    '''
+    Creates a wordcloud for a given variety to be chosen on line 73.
+    '''
+
     wrangler = Data_Handler('data/cleaned_data.csv')
     # df = wrangler.full
     df = wrangler.get_certain_varieties(['Chardonnay'])
@@ -69,6 +82,11 @@ def word_cloud():
 
 
 def confusion_matrix():
+    '''
+    Creates a full confusion matrix for the top 15 varieties and displays it.
+    Currently changes to vectorizer and model must be done manually.
+    '''
+
     wrangler = Data_Handler('data/cleaned_data.csv')
     df = wrangler.get_top_num(15)
     stops = wrangler.stop_words
@@ -82,7 +100,7 @@ def confusion_matrix():
     X_test = vecto.transform(X_test)
     model = ComplementNB()
     model.fit(X_train, y_train)
-    plot_confusion_matrix(model, X_test, y_test, normalize='true', 
+    plot_confusion_matrix(model, X_test, y_test, normalize=None, 
         xticks_rotation='vertical')
     plt.show()
 

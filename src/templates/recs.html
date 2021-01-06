@@ -36,8 +36,11 @@
     <main role="main" class="container">
 
       <div class="starter-template">
-        <h1>Some varieties to explore</h1>
-        <p class="lead">{{text}}</p>
+        <h1>Some Varieties to Explore</h1>
+        <br>
+        {% for item in text %}
+          <h3> {{ item }} </h3>
+        {% endfor %}
       </div>
 
     </main><!-- /.container -->

@@ -7,10 +7,10 @@ class Data_Handler(object):
 
     def __init__(self, filepath):
         self.full = pd.read_csv(filepath)[['description', 'variety']].dropna()
-        self.freq_dict = self.create_freq_dict()
+        self.freq_dict = self._create_freq_dict()
         self.stop_words = self.generate_stop_words()
     
-    def create_freq_dict(self):
+    def _create_freq_dict(self):
         '''
         Creates a Counter dictionary of the varietals in the full dataset.
 
@@ -92,6 +92,6 @@ if __name__ == '__main__':
     will be primarily in other .py files and pipelines.
     '''
 
-    wrangler = Data_Handler('data/cleaned_data.csv')
-    df = wrangler.full
-    print(df['description'][4])
+    # wrangler = Data_Handler('data/cleaned_data.csv')
+    # df = wrangler.full
+    # print(df['description'][4])

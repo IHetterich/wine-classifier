@@ -5,8 +5,8 @@ import pickle
 
 def recommend(model, vectorizer, desc):
     '''
-    Takes in a model, text vectorizer, and a single input. Returns
-    five recommendations pulled from the top five most probable classes.
+    Takes in a model, text vectorizer, and a single input. Returns five
+    recommendations pulled from the top five most probable classes.
 
     Parameters
     ----------

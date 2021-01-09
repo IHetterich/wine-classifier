@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import pickle
+import time
 
 from data_handler import Data_Handler
 from eda_tools import top_x_words, graph_top_num, word_cloud
@@ -28,16 +29,25 @@ def model_testing(stops, X, y, max=None, ngrams=(1,1)):
     scores = []
     folder = StratifiedKFold()
     for train_idx, test_idx in folder.split(X, y):
+        cycle = time.time()
         X_train, y_train = X[train_idx], y[train_idx]
         X_test, y_test = X[test_idx], y[test_idx]
 
-        vecto = TfidfVectorizer(stop_words=stops, max_features=max, 
-            ngram_range=ngrams)
-        X_train = vecto.fit_transform(X_train)
-        X_test = vecto.transform(X_test)
-        model = ComplementNB()
-        model.fit(X_train, y_train)
-        scores.append(model.score(X_test, y_test))
+        # vecto = TfidfVectorizer(stop_words=stops, max_features=max, 
+        #     ngram_range=ngrams)
+        # X_train = vecto.fit_transform(X_train)
+        # X_test = vecto.transform(X_test)
+
+        nb = RandomForestClassifier()
+        nb.fit(X_train, y_train)
+        X_train = nb.predict_proba(X_train)
+        X_test = nb.predict_proba(X_test)
+
+        rfc = RandomForestClassifier()
+        rfc.fit(X_train, y_train)
+
+        scores.append(rfc.score(X_test, y_test))
+        print(time.time() - cycle)
     print(np.mean(scores), scores)
 
 
@@ -107,10 +117,19 @@ if __name__ == '__main__':
 
     # params = {'max_features': [None], 'n-grams': [(1,1)]}
     
-    # wrangler = Data_Handler('data/cleaned_data.csv')
-    # stops = wrangler.stop_words
-
-    # df = wrangler.get_top_num(15)
-    # y = df['variety'].to_numpy()
+    wrangler = Data_Handler('data/cleaned_data.csv')
+    stops = wrangler.stop_words
+    df = wrangler.get_top_num(15)
+    y = df['variety'].to_numpy()
     # X = df['description'].to_numpy()
+
+    i = open('data/elmo_vectors.pkl', 'rb')
+    elmo = pickle.load(i)
+    # df = df + 2.5
+    # print(df.shape)
+    # print(np.mean(df))
+    # print(np.max(df))
+    # print(np.min(df))
+
+    model_testing(stops, elmo, y)
     # vectorizer_hyper_test(params, stops, X, y)

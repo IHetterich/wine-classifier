@@ -1,3 +1,11 @@
+'''
+This file has just been a place that develop and test out various ideas and
+functions, In the end anything that is actually deployed will be housed in an
+actually formatted and well documented file elsewhere. I use this mainly as an
+additional protection against breaking already working code that is being
+regularly used
+'''
+
 import numpy as np
 import pandas as pd
 import pickle

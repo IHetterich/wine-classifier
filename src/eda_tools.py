@@ -1,14 +1,16 @@
+import argparse
+
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-import argparse
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import plot_confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import ComplementNB
+from wordcloud import ImageColorGenerator, WordCloud
+
 from data_handler import Data_Handler
-from wordcloud import WordCloud, ImageColorGenerator
 
 plt.style.use('ggplot')
 
@@ -100,8 +102,13 @@ def confusion_matrix():
     X_test = vecto.transform(X_test)
     model = ComplementNB()
     model.fit(X_train, y_train)
-    plot_confusion_matrix(model, X_test, y_test, normalize=None, 
-        xticks_rotation='vertical')
+
+    class_sort = ['Pinot Noir', 'Cabernet Sauvignon', 'Red Blend', 
+        'Bordeaux-style Red Blend', 'Syrah', 'Merlot', 'Zinfandel',
+        'Sangiovese', 'Malbec', 'Nebbiolo', 'Rosé', 'Chardonnay',
+        'Sauvignon Blanc', 'Riesling', 'White Blend']
+    plot_confusion_matrix(model, X_test, y_test, normalize='true', 
+        xticks_rotation='vertical', labels=class_sort, include_values=False)
     plt.show()
 
 

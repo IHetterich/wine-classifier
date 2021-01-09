@@ -9,7 +9,7 @@ y.class
 .vs
 # C extensions
 *.so
-
+*.txt
 # Distribution / packaging
 .Python
 build/

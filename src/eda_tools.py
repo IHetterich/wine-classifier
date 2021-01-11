@@ -76,7 +76,7 @@ def word_cloud():
     text = ' '.join(review for review in df['description'])
     stops = wrangler.stop_words
     wordcloud = WordCloud(stopwords=stops, background_color='white', 
-        width=500, height=600, colormap='summer').generate(text)
+        width=500, height=600, colormap='viridis').generate(text)
     plt.figure(figsize=(6, 6), dpi=250)
     plt.imshow(wordcloud, interpolation='bilinear')
     plt.axis('off')

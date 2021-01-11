@@ -10,6 +10,7 @@ y.class
 # C extensions
 *.so
 *.txt
+*.txt~
 # Distribution / packaging
 .Python
 build/

@@ -92,6 +92,6 @@ if __name__ == '__main__':
     will be primarily in other .py files and pipelines.
     '''
 
-    # wrangler = Data_Handler('data/cleaned_data.csv')
-    # df = wrangler.full
-    # print(df['description'][4])
+    wrangler = Data_Handler('data/cleaned_data.csv')
+    df = wrangler.get_top_num(15)
+    print(df.shape)

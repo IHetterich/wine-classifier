@@ -7,38 +7,68 @@
     <meta name="author" content="">
     <!-- <link rel="icon" href="../../../../favicon.ico"> -->
 
-    <title>Cover Template for Bootstrap</title>
+    <title>Contact & Info</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../static/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../static/css/cover.css" rel="stylesheet">
+    <style>
+      .row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .column {
+        float: left;
+        width: 50%;
+        padding: 10px;
+        height: 500px;
+      }
+      .left {
+        text-align: center;
+        grid-column: 1;
+      }
+      .right {
+        text-align: center;
+        grid-column: 3;
+      }
+    </style>
   </head>
 
   <body class="text-center">
 
-    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+    <div class="cover-container d-flex h-200 p-3 mx-auto flex-column">
       <header class="masthead mb-auto">
         <div class="inner">
-          <h3 class="masthead-brand">Wine Recommender</h3>
+          <h3 class="masthead-brand">Contact & Info</h3>
           <nav class="nav nav-masthead justify-content-center">
             <a class="nav-link active" href="/">Home</a>
-            <a class="nav-link active" href="/about_me">Contact & Info</a>
+            <a class="nav-link" href="/about_me">Contact & Info</a>
           </nav>
         </div>
       </header>
 
       <main role="main" class="inner cover">
-        <h1 class="cover-heading">Wine Time</h1>
-        <p class="lead">Go ahead and describe a wine in the box below for some recommendations of similar styles.</p>
-        <br>
-        <form action="/recs" method="POST"> 
-          <textarea class="md-textarea form-control" name="writing_sample"  id="writing_sample" rows="10" cols="30"></textarea>
-          <p class="text-center">
-          <p><input type = "submit" value = "Submit" /></p>
-          <!-- <button type="submit" href="recs" class="btn btn-primary">Submit</button> -->
-        </form>
+        <div class="row">
+          <div class="column-left">
+            <h1 class="cover-heading">Ian Hetterich</h1>
+            <img src="/static/about.jpg" alt="Me" width="300" height="300">
+            <p style="font-size:20px">ihetterich@gmail.com</p>
+            <a style="font-size:20px " href="https://www.linkedin.com/in/ian-hetterich/">LinkedIn</a>
+            <br>
+            <br>
+            <a style="font-size:20px" href="https://github.com/IHetterich">Github</a>
+          </div>
+          <div class="column-right">
+            <br>
+            <br>
+            <h3 class="cover-heading">Tech Stack</h3>
+            <img src="/static/tech_stack.png" alt="Me" width="300" height="300">
+          </div>
+        </div> 
+        
+        
       </main>
 
       <footer class="mastfoot mt-auto">

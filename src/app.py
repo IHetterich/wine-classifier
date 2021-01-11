@@ -21,5 +21,10 @@ def recs():
     wines = model.predict(notes)
     return render_template('recs.html', current_page='RECS', text=wines)
 
+# About me and contact page
+@app.route('/about_me', methods=['GET'])
+def about_me():
+    return render_template('contact.html', current_page='CONTACT')
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True)

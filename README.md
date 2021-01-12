@@ -4,7 +4,7 @@
 
 ## Motivation and Goals
 
-In recent years, since moving a few blocks from a great wine store, I've become more and more interested in wine. I've always enjoyed trying new things and since I've been going to tastings I've been blown away by just how much different types of wine can vary. That said, tasting notes have always seemed incredibly subjective to me, and I've always wondered how accurate you can really be in predicting a wine in a blind taste test. To that end I set out on this project to see how accurately a machine learning model could predict a varietal by tasting notes alone. Furthermore if a model can be successful I think it opens up the door to a recommender that could help me at the very least find new wines to try.
+In recent years, since moving a few blocks from a great wine store, I've become more and more interested in wine. I've always enjoyed trying new things and since I've been going to tastings I've been blown away by just how much different types of wine can vary. That said, tasting notes have always seemed incredibly subjective to me, and I've always wondered how accurate you can really be in predicting a wine in a blind taste test. To that end I set out on this project to see how accurately a machine learning model could predict a varietal by tasting notes alone, with the eventual end goal of using said model for a recommender.
 
 ## The Data
 
@@ -42,9 +42,13 @@ Moving forward I spent a good deal of time dealing with stop words to remove fro
 
 Based on the prevelance of such non-descriptive words as 'wine', 'drink', and 'finish' those and similar words were added to our stop words. As a final note on featurization we should address stemming and lemmatization. As things currently stand default procedures are being run by our vectorizer, in this case tf-idf. Once again the distinguishing terms in our reviews are the descriptions of flavors and scents as such the subtleties of different stemming and lemmatization are somewhat lost on these nouns and adjectives. That is not to say futher investigation will not be attempted in coming development.
 
+## ELMo Vectorization
+
+While investigating feturization ELMo embedding was attempted. The pertinent details of the process, which shared stop word selection with tf-idf as discussed above, can be found within in_development. At this time model performance based on ELMo vectors has yet to surpass models based on tf-idf vectors. As such there is not much to discuss at this point but further trials are planned.
+
 ## Model Creation
 
-Throughout the process of featurization there was a good deal of iteration. To that end I relied of Naive Bayes for it's relatively quick fitting and testing times. Of the models I chose a Complement model to address the unbalanced nature of my top 15 varieties, while they may be the largest they still vary greatly in size. Out of the box it performed relatively well, in fact in comparative tests it did as well if not better than Random Forests. Future development will be focused on model fine-tuning and improvement as well as implementation of neural networks in an attempt to create the most accurate model possible.
+Throughout the process of featurization there was a good deal of iteration. To that end I relied of Naive Bayes for it's relatively quick fitting and testing times. Of the models I chose a Complement model to address the unbalanced nature of my top 15 varieties, while they may be the largest they still vary greatly in size. Out of the box it performed relatively well, in fact in comparative tests it did as well if not better than Random Forests.
 
 Primary efforts thus far have been focused on understanding the challenges any model will face in trying to categorize these varieties. Initial testing for proof of code and concept was done with just the two most reviewed varieties, Pinot Noir and Chardonnay. Results were incredible out the box with ~98% accuracy on both training and test data. However, with addition of further wines this accuracy dropped dramatically. Before delving into the reasons behind this I just want to mention that accuracy is being used to compare models since there is no difference in consequences between false positives and false negatives.
 
@@ -76,9 +80,19 @@ Looking at these the issue seems like it could lie more in the overlap of variet
 
 As you can see similar styles consistently perform worse regardless of sample size. While this is far from an earth shattering conclusion I did find this clear division satisfying.
 
+Once these difficulties were diagnosed I began model tuning to try and create the best possible version for use in the recommender. Despite a great deal of experimentation I was actually unable to get better performance than that of a Complement Naive Bayes. Several models had comparable performance but couldn't compete with the speed of a Naive Bayes and as such they were noted but not advanced with. That said experimentation with ensemble methods did result in some improvement from the metrics above. By taking the probability of each class from the Naive Bayes model and passing those into a Random Forest Classifier as features I was able to increase performance by 2%. Nothing drastic but nonetheless useful.
+
+As with any data project further tuning is always possible and I fully intend to explore that. As always in theory a neural network could increase performance and I am interested in seeing the possibilitise there. Also as further vectorization techniques are explored model performance could change dramatically.
+
+## Recommender & Flask Implementation
+
+There isn't too much to say for the recommender, given a string input it vectorizes and runs the result through our ensembled Naive Bayes and Random Forest. The only real change from simply classifying the string as belonging to a single class the probability of all classes are taken and the top 5 are returned as our recommendations. Really the main concern in constructing this recommender was making sure that those top 5 actually made sense to recommend based on the given tasting notes. Thankfully throughout a lot of testing they all seem to branch off of certain notes in the input.
+
+Once I arrived at a solid working recommender I started work on Flask implementation so that it could be used by others, especially people not comfortable working with code or terminal input. Honestly there isn't too much to talk about in terms of this process, Flask is straight forward and HTML templates were simply taken from Bootstrap and modified for my specific needs. Our vectorizer and models were pickled for ease of preservation and use in the app but beyond that the results can be seen here.
+
 ## Next Steps 
 
-Some next steps have already been mentioned throughout this README but lets pull them all together and give a clear direction to the project. While we now have featurized data, a servicable model, and a better understanding of the unique challenges of this dataset there's a lot more I'd like to explore. In the interest of getting both more accurate predictions and recommender functionality I want to move forward with further model tuning and experimentation. Of particular interest to me is the use of neural networks. If all goes well with that, and even if it doesn't, I'm planning on moving ahead with developing a flask application housing this model for ease of use and sharing should someone else be interested in its applications. Outside of these two main goals there are obviously hundreds of other small tweaks and improvements to made namely in the featurizing of the data and potentially the web scraping of further reviews.
+Some next steps have already been mentioned throughout this README but lets pull them all together and give a clear direction to the project. While we now have featurized data, a solid recommender, and a better understanding of the unique challenges of this dataset there's a lot more I'd like to explore. Of particular interest to me are different vectorization methods and the use of neural networks. Outside of these two main goals there are obviously hundreds of other small tweaks and improvements to made as well as the potential web scraping of further reviews.
 
 ## Acknowledgements
 

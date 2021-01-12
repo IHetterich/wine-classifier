@@ -1,6 +1,8 @@
 data
 *.pkl
 .DS_Store
+Dockerfile
+Dockerfile~
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

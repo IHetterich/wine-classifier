@@ -6,7 +6,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import ComplementNB
 
-from data_handler import Data_Handler
+# from data_handler import Data_Handler
 
 class Recommender(object):
     '''

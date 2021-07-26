@@ -67,7 +67,7 @@ def graph_top_num(num):
 
 def word_cloud():
     '''
-    Creates a wordcloud for a given variety to be chosen on line 73.
+    Creates a wordcloud for a given variety to be chosen on line 75.
     '''
 
     wrangler = Data_Handler('data/cleaned_data.csv')
